@@ -18,6 +18,26 @@ macro_rules! unsafe_unreachable {
     };
 }
 
+/// Println doesn't compile to prints in `#[cfg(test)]`
+macro_rules! tprintln {
+    ($tt:tt) => {
+        #[cfg(not(test))]
+        {
+            println!($tt);
+        }
+    };
+}
+
+/// Print doesn't compile to prints in `#[cfg(test)]`
+macro_rules! tprint {
+    ($tt:tt) => {
+        #[cfg(not(test))]
+        {
+            print!($tt);
+        }
+    };
+}
+
 #[cfg(test)]
 mod test {
     #[test]
